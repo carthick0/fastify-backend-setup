@@ -12,7 +12,7 @@ async function app(fastify,options) {
     
 
     //register test routes
-    fastify.register(require('./routes/testRoutes'),{prefix:'/test'});
+    fastify.register(require('./routes/apiRoutes'),{prefix:'/api'});
 }
 
 

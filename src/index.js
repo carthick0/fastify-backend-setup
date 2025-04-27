@@ -1,5 +1,6 @@
 const fastify = require('fastify')({logger:true}); //calling the fastify constructor
-const app=require('./app')
+const app=require('./app');
+const servicePlugin = require('./services/servicePlugin');
 // fastify.get('/ping',(req,res)=>{
 //     //controller function
 //     res.send({data:'pong'});
@@ -9,6 +10,7 @@ const app=require('./app')
 const port=3000
 
 fastify.register(app);
+
 fastify.listen({port :port}, (err) => {
     if (err) {
       fastify.log.error(err)
