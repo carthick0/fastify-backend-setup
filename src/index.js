@@ -1,5 +1,9 @@
 const fastify = require('fastify')({logger:true}); //calling the fastify constructor
 const app=require('./app');
+const connectDB  = require('./config/dbConfig');
+const { PORT } = require('./config/serverConfig');
+
+
 const servicePlugin = require('./services/servicePlugin');
 // fastify.get('/ping',(req,res)=>{
 //     //controller function
@@ -7,15 +11,19 @@ const servicePlugin = require('./services/servicePlugin');
 // });
 
 
-const port=3000
 
 fastify.register(app);
 
-fastify.listen({port :port}, (err) => {
-    if (err) {
-      fastify.log.error(err)
-      process.exit(1)
-    }
-
-    console.log(`server up at port ${port}`);
-  })
+fastify.listen({ port: PORT },async(err)=>{
+  if(err){
+    fastify.log.error(err);
+    process.exit(1)
+  }
+  await connectDB();
+  if(connectDB()){
+    console.log('DB connected sucessfully')
+  }
+  console.log(`Server is up at port ${PORT}`)
+})
+  
+  
